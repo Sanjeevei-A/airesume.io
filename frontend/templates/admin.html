@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResumeIQ — Admin Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="/">Resume<span>IQ</span></a>
+    <ul class="nav-links">
+      <li><a href="/">Analyze</a></li>
+      <li><a href="/admin/" class="active">Dashboard</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="admin-hero">
+  <h1>Admin Dashboard</h1>
+  <p>All resume analyses at a glance.</p>
+</div>
+
+<main class="container admin-container">
+
+  <!-- Stats row -->
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card"><span class="stat-num" id="statTotal">—</span><span class="stat-label">Resumes Analyzed</span></div>
+    <div class="stat-card"><span class="stat-num" id="statAvg">—</span><span class="stat-label">Avg ATS Score</span></div>
+    <div class="stat-card"><span class="stat-num" id="statMax">—</span><span class="stat-label">Top Score</span></div>
+    <div class="stat-card"><span class="stat-num" id="statMin">—</span><span class="stat-label">Lowest Score</span></div>
+  </div>
+
+  <!-- Grade distribution bar -->
+  <div class="card" id="gradeCard">
+    <h3>Grade Distribution</h3>
+    <div class="grade-dist" id="gradeDist"></div>
+  </div>
+
+  <!-- Resume table -->
+  <div class="card" id="tableCard">
+    <h3>All Submissions</h3>
+    <div class="table-wrap">
+      <table class="admin-table" id="resumeTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Filename</th>
+            <th>ATS Score</th>
+            <th>Grade</th>
+            <th>Words</th>
+            <th>Uploaded</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="resumeTableBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>ResumeIQ Admin · Built with Flask + SQLAlchemy</p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+</body>
+</html>

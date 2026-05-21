@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResumeIQ — AI Resume Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="/">Resume<span>IQ</span></a>
+    <ul class="nav-links">
+      <li><a href="/">Analyze</a></li>
+      <li><a href="/admin/">Dashboard</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-content">
+    <div class="badge">✦ Powered by ML + NLP</div>
+    <h1>Your resume,<br /><em>objectively scored.</em></h1>
+    <p class="hero-sub">
+      Upload your resume and get an instant ATS score, skill gap analysis,
+      job-role matches, and AI-powered rewrite suggestions — all in seconds.
+    </p>
+  </div>
+</header>
+
+<!-- ── UPLOAD CARD ───────────────────────────────────────────────────────────── -->
+<main class="container">
+  <section class="upload-section">
+    <form id="uploadForm" enctype="multipart/form-data">
+
+      <!-- Drop zone -->
+      <div class="dropzone" id="dropzone">
+        <div class="dz-icon">⬆</div>
+        <p class="dz-label">Drop your resume here</p>
+        <p class="dz-sub">PDF, DOCX, or TXT · max 5 MB</p>
+        <label class="btn btn-outline" for="fileInput">Browse file</label>
+        <input type="file" id="fileInput" name="file" accept=".pdf,.docx,.txt" hidden />
+        <p class="dz-file-name" id="fileName"></p>
+      </div>
+
+      <!-- Job description -->
+      <div class="field-group">
+        <label for="jdInput">Job description <span class="optional">(optional — boosts ATS accuracy)</span></label>
+        <textarea id="jdInput" name="job_description" rows="5"
+                  placeholder="Paste the job description here…"></textarea>
+      </div>
+
+      <!-- Provider selector (for AI suggestions) -->
+      <div class="field-group ai-field">
+        <label>AI suggestion provider</label>
+        <div class="radio-group">
+          <label class="radio-card">
+            <input type="radio" name="provider" value="gemini" checked />
+            <span>Gemini</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="provider" value="openai" />
+            <span>GPT-4o</span>
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="submitBtn">
+        <span class="btn-text">Analyze Resume</span>
+        <span class="btn-loader hidden" id="btnLoader">Analyzing…</span>
+      </button>
+    </form>
+  </section>
+
+  <!-- ── RESULTS ──────────────────────────────────────────────────────────── -->
+  <section class="results hidden" id="results">
+
+    <!-- Score ring -->
+    <div class="score-header">
+      <div class="score-ring" id="scoreRing">
+        <svg viewBox="0 0 120 120">
+          <circle class="track" cx="60" cy="60" r="52" />
+          <circle class="fill"  cx="60" cy="60" r="52" id="scoreArc" />
+        </svg>
+        <div class="score-text">
+          <span class="score-num" id="scoreNum">0</span>
+          <span class="score-label">ATS Score</span>
+        </div>
+      </div>
+      <div class="score-meta">
+        <h2>Resume Analysis</h2>
+        <p id="scoreGrade" class="grade-badge">—</p>
+        <p id="scoreSummary" class="score-summary"></p>
+      </div>
+    </div>
+
+    <!-- Component bars -->
+    <div class="components" id="components"></div>
+
+    <!-- Two-column info grid -->
+    <div class="info-grid">
+      <div class="card" id="skillsCard">
+        <h3>✦ Skills Detected</h3>
+        <div class="tag-cloud" id="skillsCloud"></div>
+      </div>
+      <div class="card" id="missingCard">
+        <h3>⚠ Missing Keywords</h3>
+        <div class="tag-cloud" id="missingCloud"></div>
+      </div>
+    </div>
+
+    <!-- Job recommendations -->
+    <div class="card" id="jobsCard">
+      <h3>🎯 Best-Fit Roles</h3>
+      <div class="job-list" id="jobList"></div>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="card" id="tipsCard">
+      <h3>💡 Improvement Tips</h3>
+      <ul class="tips-list" id="tipsList"></ul>
+    </div>
+
+    <!-- AI suggestions block (loaded on demand) -->
+    <div class="card ai-card hidden" id="aiCard">
+      <h3>🤖 AI Coach Feedback</h3>
+      <div id="aiContent"></div>
+    </div>
+
+    <button class="btn btn-secondary" id="aiBtn">Get AI Suggestions</button>
+  </section>
+
+  <!-- ── ERROR ──────────────────────────────────────────────────────────── -->
+  <div class="error-box hidden" id="errorBox"></div>
+</main>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <p>ResumeIQ · Built with Flask · spaCy · scikit-learn · OpenAI / Gemini</p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

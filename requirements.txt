@@ -1,0 +1,37 @@
+# ─── Web Framework ────────────────────────────────────────────────────────────
+flask==3.0.3
+flask-cors==4.0.1
+flask-sqlalchemy==3.1.1
+python-dotenv==1.0.1
+werkzeug==3.0.3
+
+# ─── PDF / Document Parsing ───────────────────────────────────────────────────
+PyMuPDF==1.24.5          # fitz — fast PDF text extraction
+python-docx==1.1.2       # .docx support
+pdfplumber==0.11.1       # table-aware PDF extraction (fallback)
+
+# ─── NLP ──────────────────────────────────────────────────────────────────────
+spacy==3.7.5
+nltk==3.8.1
+# After pip install, run:
+#   python -m spacy download en_core_web_sm
+#   python -m nltk.downloader stopwords punkt averaged_perceptron_tagger
+
+# ─── Machine Learning ─────────────────────────────────────────────────────────
+scikit-learn==1.5.0
+numpy==1.26.4
+pandas==2.2.2
+joblib==1.4.2            # model serialization
+
+# ─── Database ─────────────────────────────────────────────────────────────────
+pymongo==4.7.3           # MongoDB driver (optional)
+# SQLite is bundled with Python — no extra package needed
+
+# ─── AI Add-ons (optional) ────────────────────────────────────────────────────
+openai==1.35.3
+google-generativeai==0.7.2
+
+# ─── Utilities ────────────────────────────────────────────────────────────────
+requests==2.32.3
+Pillow==10.3.0
+python-magic==0.4.27     # MIME-type detection
